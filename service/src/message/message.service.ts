@@ -28,13 +28,12 @@ export class MessageService {
         ...createMessageDto,
         unReads: participants,
       })
-      // if(message){
-      //   // 循环发送消息
-      //   participants.forEach((receiverId)=>{
-      //     this.wsService.sendPrivateMessage(message,receiverId);
-      //   })
-      // }
-      return message
+      return this.messageModel.findById(message._id).populate({
+        path: 'senderId',
+        populate: {
+          path: 'avatar',
+        },
+      })
     }
 
     const message = await this.messageModel.create({
@@ -42,11 +41,12 @@ export class MessageService {
       unReads: [createMessageDto.receiverId],
     });
 
-    // if (message) {
-    //   this.wsService.sendPrivateMessage(message,createMessageDto.receiverId);
-    // }
- 
-    return message
+    return this.messageModel.findById(message._id).populate({
+      path: 'senderId',
+      populate: {
+        path: 'avatar',
+      },
+    })
   }
 
   // 创建系统消息

@@ -87,7 +87,7 @@ export default function conversationId() {
         user: {
           _id: message.senderId[0]?._id!,
           name: message.senderId[0]?.name,
-          avatar: message.senderId[0]?.avatar,
+          avatar: getAvatarUrl(message.senderId[0]?.avatar),
         },
       }])
     }
